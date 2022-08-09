@@ -7,8 +7,8 @@ import os
 
 
 class DataSet(object):
-    data_path = "data/heart.csv"
-    def __init__(self,data_path):
+    data_path = "../data/"
+    def __init__(self,data_path=None):
         
         self.data_path = data_path
         
@@ -20,13 +20,14 @@ class DataSet(object):
     
     
     def load_csv(self):
-        self.data = pd.read_csv(self.data_path)
+        self.data = pd.read_csv(os.path.join(self.data_path,'heart.csv'))
     
-    def print_df(df,h=5,t=5):
+    def print_df(self,h=5):
         print("Printing the Data head -------")
-        print(df.head(h))
+        print(self.data.head(h))
         print("Printing the Data tail -------")
-        print(df.tail(5))
+        print(self.data.tail(h))
+    
     
         
         
