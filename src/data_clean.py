@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import os
 from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
 
 class DataSet(object):
     data_path = "../data/"
@@ -39,7 +40,11 @@ class DataSet(object):
             self.data = self.data.apply(LabelEncoder().fit_transform)
         else:
             self.data = pd.get_dummies(self.data,columns=str_col,drop_first=True)
-                
+            
         
+    def data_target(self):
+        y = self.data['HeartDisease'].values
+        X = self.data.drop(columns=['HeartDisease'],axis=1)
+        return X,y
         
                 
