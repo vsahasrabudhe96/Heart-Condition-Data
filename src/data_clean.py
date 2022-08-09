@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
-
+from sklearn.preprocessing import LabelEncoder
 
 class DataSet(object):
     data_path = "../data/"
@@ -28,7 +28,18 @@ class DataSet(object):
         print("Printing the Data tail -------")
         print(self.data.tail(h))
     
+    def continuous_categorical(self):
+        int_col = [c for c in self.data.columns if self.data[c].dtype == 'int64' or self.data[c].dtype == 'float64']
+        str_col = [c for c in self.data.columns if c not in int_col]
+        return int_col,str_col
     
+    def encoding(self,tree=True):
+        int_col, str_col = self.continuous_categorical()
+        if tree == True:
+            self.data = self.data.apply(LabelEncoder().fit_transform)
+        else:
+            self.data = pd.get_dummies(self.data,columns=str_col,drop_first=True)
+                
         
         
                 
