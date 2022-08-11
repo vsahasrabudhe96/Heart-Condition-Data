@@ -24,7 +24,7 @@ class DataSet(object):
     def load_csv(self):
         self.data = pd.read_csv(os.path.join(self.data_path,'heart.csv'))
     
-    def detais(self):
+    def details(self):
         print("---------------------")
         print(self.data.shape)
         print("---------------------")
