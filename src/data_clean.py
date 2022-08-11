@@ -6,6 +6,7 @@ import seaborn as sns
 import os
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
+from sklearn.model_selection import StratifiedKFold
 
 class DataSet(object):
     data_path = "../data/"
@@ -23,11 +24,18 @@ class DataSet(object):
     def load_csv(self):
         self.data = pd.read_csv(os.path.join(self.data_path,'heart.csv'))
     
+    def detais(self):
+        print("---------------------")
+        print(self.data.shape)
+        print("---------------------")
+        return ""
+    
     def print_df(self,h=5):
         print("Printing the Data head -------")
         print(self.data.head(h))
         print("Printing the Data tail -------")
         print(self.data.tail(h))
+        return ""
     
     def continuous_categorical(self):
         int_col = [c for c in self.data.columns if self.data[c].dtype == 'int64' or self.data[c].dtype == 'float64']
@@ -46,5 +54,4 @@ class DataSet(object):
         y = self.data['HeartDisease'].values
         X = self.data.drop(columns=['HeartDisease'],axis=1)
         return X,y
-        
                 
