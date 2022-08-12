@@ -35,6 +35,10 @@ if __name__ == "__main__":
         
         print(f"The accuracy for Fold {fold+1} : {acc}")
         
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-t','--tree',type=Boolean,default=False,help="Tree based Algo or Non tree based algo")
+    parser.add_argument('-a','--algo',choices=['LR','NB','SVM','KNN','DT','RF','XGB'],help='Choose which ML algo to run')
+    parser.add_argument('-ns','--nsplits',type=int,default=5,help='number of splits in kfold')
     
 
     
