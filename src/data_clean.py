@@ -51,7 +51,7 @@ class DataSet(object):
             
         
     def data_target(self):
-        y = self.data['HeartDisease'].values
+        y = self.data['HeartDisease']
         X = self.data.drop(columns=['HeartDisease'],axis=1)
         return X,y
                 
