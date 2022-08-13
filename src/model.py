@@ -1,22 +1,13 @@
-from sklearn.linear_model import LogisticRegression
-from sklearn.naive_bayes import GaussianNB
-from sklearn.svm import SVC
-from sklearn.neighbors import KNeighborsClassifier
 
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
-
-from xgboost import XGBClassifier
 from sklearn.metrics import confusion_matrix,classification_report,accuracy_score,roc_auc_score
+from data_clean import DataSet
+
 
 
 
 class Model(object):
     def __init__(self,data):
         self.data  = data
-    
-    def model(self,algo=RandomForestClassifier()):
-        return algo
     
     def fit(self,Xtrain,ytrain,m):
         m.fit(Xtrain,ytrain)
@@ -25,5 +16,21 @@ class Model(object):
         y_pred = m.predict(Xtest)
         return y_pred
     
-    
-    
+    def train_predict(self,X,y,kf,model):
+        acc_log = []
+        for fold, (train_idx,test_idx) in enumerate(kf.split(X=X,y=y.values)):
+            X_train = X.loc[train_idx,X.columns.to_list()]
+            y_train = y[train_idx]
+                
+            X_val = X.loc[test_idx,X.columns.to_list()]
+            y_val = y[test_idx]
+            
+            model.fit(X_train,y_train)
+            y_pred = model.predict(X_val)
+            print(f"The fold is : {fold} : ")
+            print(classification_report(y_val,y_pred))
+            acc = roc_auc_score(y_val,y_pred)
+            
+            print(f"The accuracy for Fold {fold+1} : {acc}")
+        
+        return acc_log
