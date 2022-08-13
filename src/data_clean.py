@@ -54,4 +54,3 @@ class DataSet(object):
         y = self.data['HeartDisease']
         X = self.data.drop(columns=['HeartDisease'],axis=1)
         return X,y
-                
